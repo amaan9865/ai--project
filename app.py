@@ -19,8 +19,6 @@ def index():
 @app.route('/callback', methods=['GET'])
 def callback():
     token = request.args.get('credential')
-    # Your existing logic
-
     try:
         idinfo = id_token.verify_oauth2_token(token, grequests.Request(), GOOGLE_CLIENT_ID)
         session['user'] = {
@@ -32,6 +30,7 @@ def callback():
         return "Invalid token", 400
 
     return redirect(url_for('index'))
+
 
 
 @app.route('/logout')
