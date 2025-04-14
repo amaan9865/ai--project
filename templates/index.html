@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Google Login Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <div class="container">
+        {% if user %}
+            <img src="{{ user.picture }}" alt="Profile Picture" class="profile-pic">
+            <h1>Hello {{ user.name }} 👋</h1>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+        {% else %}
+            <h1>Login with Google 🚀</h1>
+            <div id="g_id_onload"
+                 data-client_id="YOUR_CLIENT_ID_HERE"
+                 data-context="signin"
+                 data-ux_mode="redirect"
+                 data-login_uri="http://localhost:5000/callback"
+                 data-auto_prompt="false">
+            </div>
+
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="pill"
+                 data-theme="filled_black"
+                 data-text="signin_with"
+                 data-size="large">
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
