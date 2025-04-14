@@ -20,9 +20,12 @@ def index():
 def callback():
     print("Request method:", request.method)
     if request.method == 'POST':
-        return "POST method not allowed here.", 405
-    token = request.args.get('credential')
-    # existing logic
+        token = request.form.get('credential')  # For POST method
+    else:
+        token = request.args.get('credential')  # For GET method
+
+    if not token:
+        return "No token found", 400
 
     try:
         idinfo = id_token.verify_oauth2_token(token, grequests.Request(), GOOGLE_CLIENT_ID)
@@ -35,6 +38,7 @@ def callback():
         return "Invalid token", 400
 
     return redirect(url_for('index'))
+
 
 
 
