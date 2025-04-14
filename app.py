@@ -16,9 +16,14 @@ def index():
     return render_template('index.html', user=user)
 
 
-@app.route('/callback', methods=['GET'])
+@app.route('/callback', methods=['GET', 'POST'])
 def callback():
+    print("Request method:", request.method)
+    if request.method == 'POST':
+        return "POST method not allowed here.", 405
     token = request.args.get('credential')
+    # existing logic
+
     try:
         idinfo = id_token.verify_oauth2_token(token, grequests.Request(), GOOGLE_CLIENT_ID)
         session['user'] = {
