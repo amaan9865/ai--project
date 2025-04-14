@@ -16,9 +16,11 @@ def index():
     return render_template('index.html', user=user)
 
 
-@app.route('/callback')
+@app.route('/callback', methods=['GET'])
 def callback():
     token = request.args.get('credential')
+    # Your existing logic
+
     try:
         idinfo = id_token.verify_oauth2_token(token, grequests.Request(), GOOGLE_CLIENT_ID)
         session['user'] = {
